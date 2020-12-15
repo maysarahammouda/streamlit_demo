@@ -7,13 +7,20 @@ import yfinance as yf
 from datetime import datetime
 import time
 import random
+from PIL import Image
 
 
 st.title("The Results from Trading Using Investiva")
-st.write("Here, we share with you some of the results from our trading agent, Investiva.")
+st.write("Here are some of the results from our trading agent using IBKR paper account.")
 
-asset = 'MSFT'
- 
+image = Image.open('investiva.png')
+st.sidebar.image(image, use_column_width=True)
+
+asset = st.sidebar.selectbox("Choose a stock: ", ["MSFT","AAPL","AMZN"])
+
+img = Image.open(f'{asset}.png')
+st.sidebar.image(img, use_column_width=True)
+
 # Getting the OHLCV data through API.
 df = web.DataReader(asset, data_source='yahoo', start='01-01-2020')
 
@@ -36,7 +43,7 @@ data = [trace1]
 # Config graph layout
 layout = go.Layout({
     'title': {
-        'text': '<b>Microsoft Chart<b>',
+        'text': f'<b>{asset} Chart<b>',
         'font': {
             'size': 20
         }
